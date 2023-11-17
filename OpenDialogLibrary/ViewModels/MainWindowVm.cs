@@ -1,5 +1,5 @@
-﻿using MvvmBuilder.Notifies;
-using System.Windows.Controls;
+﻿using ModernWpf.Controls;
+using MvvmBuilder.Notifies;
 using OpenDialogLibrary.Services.Interface;
 using OpenDialogLibrary.Views.Pages;
 
@@ -9,7 +9,7 @@ internal class MainWindowVm : NotifyBase
 {
     private readonly IPageService _pageService;
 
-    internal MainWindowVm(IPageService pageService)
+    public MainWindowVm(IPageService pageService)
     {
         _pageService = pageService;
         _pageService.PageChanged += page => this.CurrentPage = page;

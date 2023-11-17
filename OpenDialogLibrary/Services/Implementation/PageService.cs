@@ -1,9 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using ModernWpf.Controls;
 using OpenDialogLibrary.Services.Interface;
 
 namespace OpenDialogLibrary.Services.Implementation;
 
-public class PageService : IPageService
+internal class PageService : IPageService
 {
     private readonly Stack<Page> _history = new();
 
