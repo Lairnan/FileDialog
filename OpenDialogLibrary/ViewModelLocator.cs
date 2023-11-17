@@ -1,11 +1,10 @@
 ﻿using OpenDialogLibrary.ViewModels;
 using OpenDialogLibrary.ViewModels.Pages;
 
-namespace OpenDialogLibrary
+namespace OpenDialogLibrary;
+
+internal static class ViewModelLocator
 {
-    internal static class ViewModelLocator
-    {
-        internal static MainWindowVm MainWindowVm => IoC.Resolve<MainWindowVm>();
-        internal static MainPageVm MainPageVm => IoC.Resolve<MainPageVm>();
-    }
+    internal static MainWindowVm MainWindowVm => IoC.Resolve<MainWindowVm>();
+    internal static MainPageVm MainPageVm => IoC.Resolve<MainPageVm>();
 }

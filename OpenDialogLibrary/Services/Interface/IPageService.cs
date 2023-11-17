@@ -1,13 +1,12 @@
 ﻿using System.Windows.Controls;
 
-namespace OpenDialogLibrary.Services.Interface
-{
-    public interface IPageService
-    {
-        event Action<Page> PageChanged;
-        bool CanGoBack { get; }
+namespace OpenDialogLibrary.Services.Interface;
 
-        void Navigate(Page page);
-        void GoBack();
-    }
+public interface IPageService
+{
+    event Action<Page> PageChanged;
+    bool CanGoBack { get; }
+
+    void Navigate(Page page);
+    void GoBack();
 }
