@@ -1,4 +1,5 @@
-﻿using OpenDialogLibrary.Views;
+﻿using OpenDialogLibrary.Models.Implementation;
+using OpenDialogLibrary.Views;
 
 namespace OpenDialogLibrary;
 
@@ -17,13 +18,8 @@ public partial class OpenDialog
     public string FileName { get; internal set; } = string.Empty;
     public string[]? FileNames { get; internal set; } = null;
     public string StartDirectory { get; set; } = System.IO.Directory.GetCurrentDirectory();
-
-    private string _filter = string.Empty; // todo: "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-    public string Filter
-    {
-        get => _filter;
-        set => _filter = value; // todo: доделать фильтр
-    }
+    public string Filter { get; set; } = string.Empty;
+    
     /*
      * Ниже приведен пример строки фильтра:
      * Text files (*.txt)|*.txt|All files (*.*)|*.*
@@ -73,6 +69,15 @@ public partial class OpenDialog
         Instance = null;
         IoC.Deinitialize();
         return res ?? false;
+    }
+
+    public bool ShowDialog(string startDirectory)
+    {
+        if (string.IsNullOrWhiteSpace(startDirectory)) return false;
+        if (!System.IO.Path.Exists(startDirectory)) return false;
+
+        this.StartDirectory = startDirectory;
+        return ShowDialog();
     }
 }
 

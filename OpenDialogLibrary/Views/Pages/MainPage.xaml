@@ -12,5 +12,23 @@
          d:DesignWidth="800"
          Title="Test">
     <Grid>
+		<ui:ScrollViewerEx VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding FMainCollection}" HorizontalAlignment="Left">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+					    <Grid Margin="5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="32"/>
+								<ColumnDefinition Width="7*"/>
+								<ColumnDefinition Width="1*"/>
+							</Grid.ColumnDefinitions>
+						    <Image Grid.Column="0" Source="{Binding Image}"/>
+						    <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+							<TextBlock Grid.Column="2" Text="{Binding CreationTime, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
+						</Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+		</ui:ScrollViewerEx>
     </Grid>
 </ui:Page>
