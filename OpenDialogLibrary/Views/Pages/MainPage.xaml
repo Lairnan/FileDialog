@@ -5,6 +5,7 @@
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
          xmlns:ui="http://schemas.modernwpf.com/2019"
          xmlns:local="clr-namespace:OpenDialogLibrary"
+         xmlns:interfaces="clr-namespace:OpenDialogLibrary.Models.Interfaces"
          d:DataContext="{Binding Source={x:Static local:ViewModelLocator.MainPageVm}}"
          x:ClassModifier="internal"
          mc:Ignorable="d"
@@ -15,7 +16,7 @@
 		<ui:ScrollViewerEx VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding FMainCollection}" HorizontalAlignment="Left">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate DataType="{x:Type interfaces:FMain}">
 					    <Grid Margin="5">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="32"/>
