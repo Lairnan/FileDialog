@@ -34,11 +34,11 @@ internal static class IconConverter
 
     private static async Task<byte[]> GetDefaultImage()
     {
-        var data = await GetFromResource("/Images/404.jpg");
+        var data = await GetFromResource("Images/404.jpg");
         return data;
     }
 
-    public static async Task<byte[]> GetFromPathUri(string path)
+    private static async Task<byte[]> GetFromPathUri(string path)
     {
         var uri = new Uri(path);
         var bitmapImage = new BitmapImage(uri);
@@ -53,9 +53,10 @@ internal static class IconConverter
         return data;
     }
 
-    public static async Task<byte[]> GetFromResource(string path)
+    internal static async Task<byte[]> GetFromResource(string path, string assembly = "")
     {
-        path = "pack://application:,,,/OpenDialogLibrary;component" + path;
+        if(string.IsNullOrWhiteSpace(assembly)) assembly = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name!;
+        path = $"pack://application:,,,/{assembly};component/{path}";
         return await GetFromPathUri(path);
     }
 }

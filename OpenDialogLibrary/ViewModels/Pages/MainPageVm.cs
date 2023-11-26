@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Data;
 using MvvmBuilder.Notifies;
 using OpenDialogLibrary.BehaviorsFiles;
 using OpenDialogLibrary.Models.Interfaces;
@@ -22,12 +24,11 @@ internal class MainPageVm : NotifyBase
         var path = string.IsNullOrWhiteSpace(OpenDialog.Instance!.StartDirectory)
             ? OpenDialog.Instance.StartDirectory
             : Environment.CurrentDirectory;
-        this.FMainCollection.AddFMains(path);
+        _fMains.GetDefaultFMains(path);
+        this.FMainCollection.SortDescriptions.Add(new SortDescription("FType", ListSortDirection.Descending));
     }
+
+    private readonly ObservableCollection<FMain> _fMains = new();
     
-    public ObservableCollection<FMain> FMainCollection
-    {
-        get => GetProperty<ObservableCollection<FMain>>();
-        private init => SetProperty(value, new ObservableCollection<FMain>());
-    }
+    public ICollectionView FMainCollection => CollectionViewSource.GetDefaultView(_fMains);
 }

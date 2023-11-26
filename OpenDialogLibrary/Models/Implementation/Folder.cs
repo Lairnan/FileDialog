@@ -90,4 +90,26 @@ public class Folder : FMain
 
         return GetDirectories(folders);
     }
+    
+    private static IEnumerable<FMain> GetFMains(IEnumerable<string> mains)
+    {
+        foreach (var main in mains)
+        {
+            if(Directory.Exists(main))
+                yield return new Folder(main);
+            else yield return new File(main);
+        }
+    }
+    
+    public IEnumerable<FMain> GetFMains()
+    {
+        var mains = Directory.GetFileSystemEntries(this.Path);
+        return GetFMains(mains);
+    }
+    
+    public IEnumerable<FMain> GetFMains(Predicate<string> filter)
+    {
+        var mains = Directory.GetFileSystemEntries(this.Path).Where(s => filter(s));
+        return GetFMains(mains);
+    }
 }

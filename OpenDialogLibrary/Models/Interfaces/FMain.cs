@@ -10,6 +10,10 @@ public abstract class FMain : NotifyBase
     protected FMain(string path)
     {
         this.Path = path;
+        this.FType = (System.IO.File.GetAttributes(path)
+                      & FileAttributes.Directory) != 0
+            ? FMainType.Directory
+            : FMainType.File;
         LoadAsync(path);
         Load(path);
     }
@@ -21,7 +25,7 @@ public abstract class FMain : NotifyBase
 
     private void Load(string path)
     {
-        if (string.IsNullOrWhiteSpace(path)) return;
+        if (string.IsNullOrWhiteSpace(path)) throw new ArgumentNullException(path, "Path can't be empty");
         FileSystemInfo info;
         
         if ((System.IO.File.GetAttributes(path) & FileAttributes.Directory) != 0) info = new DirectoryInfo(path);
@@ -80,6 +84,12 @@ public abstract class FMain : NotifyBase
         get => GetProperty<bool>();
         protected set => SetProperty(value, false);
     }
+    
+    public FMainType FType
+    {
+        get => GetProperty<FMainType>();
+        init => SetProperty(value);
+    }
 
     private FMain? _mainDir;
     public FMain MainDir => _mainDir ??= LoadMainDir();
@@ -89,4 +99,10 @@ public abstract class FMain : NotifyBase
 
     public abstract void Move(string dest);
     public abstract void Copy(string dest);
+}
+
+public enum FMainType
+{
+    File,
+    Directory
 }
