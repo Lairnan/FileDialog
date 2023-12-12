@@ -28,7 +28,7 @@ internal class MainPageVm : NotifyBase
         this.FMainCollection.SortDescriptions.Add(new SortDescription("FType", ListSortDirection.Descending));
     }
 
-    private readonly ObservableCollection<FMain> _fMains = new();
+    private readonly ObservableCollection<FMain> _fMains = [];
     
     public ICollectionView FMainCollection => CollectionViewSource.GetDefaultView(_fMains);
 }

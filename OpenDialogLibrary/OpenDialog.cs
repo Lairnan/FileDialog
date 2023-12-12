@@ -5,11 +5,11 @@ namespace OpenDialogLibrary;
 
 public partial class OpenDialog
 {
-    private static OpenDialog? _instance;
+    private static OpenDialog? instance;
     internal static OpenDialog? Instance
     {
-        get => _instance ?? null;
-        private set => _instance = value;
+        get => instance ?? null;
+        private set => instance = value;
     }
 
     public DialogType DialogType { get; private set; }

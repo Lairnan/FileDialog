@@ -8,38 +8,38 @@ namespace OpenDialogLibrary;
 
 internal static class IoC
 {
-    private static IServiceProvider? _provider;
-    private static bool _isInitialized;
+    private static IServiceProvider? provider;
+    private static bool isInitialized;
         
     internal static T Resolve<T>() where T : notnull
     {
-        if (_provider == null) throw new ArgumentNullException(nameof(_provider), "Argument shouldn't be null");
-        return _provider.GetRequiredService<T>();
+        if (provider == null) throw new ArgumentNullException(nameof(provider), "Argument shouldn't be null");
+        return provider.GetRequiredService<T>();
     }
 
     internal static void Initialize()
     {
-        if (_isInitialized) return;
+        if (isInitialized) return;
         IServiceCollection services = new ServiceCollection();
 
         services.AddWindows();
         services.AddPages();
         services.AddServices();
 
-        _provider = services.BuildServiceProvider();
+        provider = services.BuildServiceProvider();
 
         foreach (var service in services.Where(s => s.Lifetime == ServiceLifetime.Singleton))
-            _provider.GetRequiredService(service.ServiceType);
+            provider.GetRequiredService(service.ServiceType);
 
-        _isInitialized = true;
+        isInitialized = true;
     }
 
     internal static void Deinitialize()
     {
-        if (!_isInitialized) return;
-        _provider = null;
+        if (!isInitialized) return;
+        provider = null;
         GC.Collect();
-        _isInitialized = false;
+        isInitialized = false;
     }
 
     private static void AddWindows(this IServiceCollection services)
