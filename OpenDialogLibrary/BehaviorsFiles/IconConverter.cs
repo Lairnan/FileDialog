@@ -23,13 +23,13 @@ internal static class IconConverter
         }
     }
 
-    private static async Task<byte[]> IconToBytes(Icon icon)
+    private static Task<byte[]> IconToBytes(Icon icon)
     {
         using var ms = new MemoryStream();
 
         try { icon.Save(ms); }
-        finally { ms.Close(); await ms.DisposeAsync(); }
-        return ms.ToArray();
+        finally { ms.Close(); }
+        return Task.FromResult(ms.ToArray());
     }
 
     private static async Task<byte[]> GetDefaultImage()
@@ -38,7 +38,7 @@ internal static class IconConverter
         return data;
     }
 
-    private static async Task<byte[]> GetFromPathUri(string path)
+    private static Task<byte[]> GetFromPathUri(string path)
     {
         var uri = new Uri(path);
         var bitmapImage = new BitmapImage(uri);
@@ -48,15 +48,14 @@ internal static class IconConverter
         using var ms = new MemoryStream();
         encoder.Save(ms);
         var data = ms.ToArray();
-        await ms.DisposeAsync();
         
-        return data;
+        return Task.FromResult(data);
     }
 
-    internal static async Task<byte[]> GetFromResource(string path, string assembly = "")
+    internal static Task<byte[]> GetFromResource(string path, string assembly = "")
     {
         if(string.IsNullOrWhiteSpace(assembly)) assembly = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name!;
         path = $"pack://application:,,,/{assembly};component/{path}";
-        return await GetFromPathUri(path);
+        return GetFromPathUri(path);
     }
 }
